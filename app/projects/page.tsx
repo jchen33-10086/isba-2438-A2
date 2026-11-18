@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { projects } from "./data";
+import { connection } from "next/server";
+import { readProjects } from "../lib/entities";
+
+export const instant = false;
 
 export const metadata: Metadata = {
   title: "My Projects",
 };
 
-export default function Projects() {
+export default async function Projects() {
+  await connection();
+  const projects = await readProjects();
+
   return (
     <section className="mx-auto w-full max-w-4xl px-6 py-16">
       <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { projects } from "../data";
+import { readProjects } from "../../lib/entities";
 
 export const instant = false;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const projects = await readProjects();
   return projects.map((project) => ({ slug: project.slug }));
 }
 
@@ -13,6 +14,7 @@ export async function generateMetadata({
   params,
 }: PageProps<"/projects/[slug]">): Promise<Metadata> {
   const { slug } = await params;
+  const projects = await readProjects();
   const project = projects.find((project) => project.slug === slug);
   if (!project) {
     return { title: "Project Not Found" };
@@ -24,6 +26,7 @@ export default async function ProjectPage({
   params,
 }: PageProps<"/projects/[slug]">) {
   const { slug } = await params;
+  const projects = await readProjects();
   const project = projects.find((project) => project.slug === slug);
 
   if (!project) {

@@ -2,6 +2,7 @@
 
 import { promises as fs } from "fs";
 import path from "path";
+import { createId } from "../lib/entities";
 import type { ContactFormState } from "./form-state";
 
 function isValidEmail(email: string): boolean {
@@ -24,6 +25,7 @@ function isValidEmail(email: string): boolean {
 }
 
 type StoredMessage = {
+  id: string;
   name: string;
   email: string;
   message: string;
@@ -69,6 +71,7 @@ export async function sendMessage(
   }
 
   messages.push({
+    id: createId(),
     name: name.trim(),
     email: email.trim(),
     message: message.trim(),

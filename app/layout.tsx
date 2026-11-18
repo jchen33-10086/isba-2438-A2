@@ -26,7 +26,11 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about-me", label: "About" },
   { href: "/projects", label: "Projects" },
+  { href: "/blogs", label: "Blog" },
+  { href: "/resources", label: "Resources" },
+  { href: "/interview", label: "Interview" },
   { href: "/contact-me-server-form", label: "Contact" },
+  { href: "/admin", label: "Admin" },
 ];
 
 async function SiteFooter() {
@@ -51,7 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/" className="text-lg font-semibold tracking-tight">
               Jiaxing Chen
             </Link>
-            <ul className="flex items-center gap-6 text-sm font-medium">
+            <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link

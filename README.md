@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ISBA 2438 — Assignment 2 Portfolio
 
-## Getting Started
+Personal portfolio website for Jiaxing Chen (MSBA, Santa Clara University), built with Next.js (App Router), TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # development, http://localhost:3000
+npm run build      # production build
+npm start          # serve production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pages
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Route | Description |
+| --- | --- |
+| `/` | Homepage |
+| `/about-me` | Bio and skills |
+| `/projects`, `/projects/[slug]` | Portfolio projects (server JSON, dynamic routes) |
+| `/blogs`, `/blogs/[slug]` | Blog posts (server JSON, dynamic routes) |
+| `/resources` | Learning-resource library (server JSON) |
+| `/interview` | Personal interview-question shortlist (saved in browser localStorage only) |
+| `/contact-me`, `/contact-me-server-form` | Contact forms (server action / API), saved to server JSON |
+| `/admin` | Hub for managing blogs, contacts, projects, and resources |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Admin (full CRUD)
 
-## Learn More
+`/admin/blogs`, `/admin/contacts`, `/admin/projects`, `/admin/resources` — create, read, update, and delete through the UI and the matching API routes.
 
-To learn more about Next.js, take a look at the following resources:
+## API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`/api/blogs` (+ `/[slug]`), `/api/contact` (+ `/[id]`), `/api/projects` (+ `/[slug]`), `/api/resources` (+ `/[id]`) — GET, POST, PUT, DELETE. Creates return **201**. Every response is logged as `[api] METHOD /path -> status`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Data
 
-## Deploy on Vercel
+- Server entities are stored in `data/*.json` (`blogs.json`, `messages.json`, `projects.json`, `resources.json`).
+- The interview shortlist is stored per-browser in localStorage and never leaves the device.
+- Validation runs server-side for all API writes: required text fields cannot be blank after trimming, emails must contain one `@` with text before it and a dotted domain without spaces, resource URLs must be valid http(s) links.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Demo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. `npm run build && npm start`
+2. Open `/admin/resources` to add a learning resource (title, URL, topic, notes).
+3. Open `/resources` to see it listed; click through to the source link.
+4. Open `/admin/contacts` to review contact submissions (edit/delete).
+5. Open `/interview` to add questions, mark them asked, and refresh the page to see persistence.
